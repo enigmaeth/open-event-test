@@ -11,6 +11,7 @@ from app.models.user import User
 from app.models.notification import Notification
 from app.models.event_invoice import EventInvoice
 from app.api.helpers.permissions import is_admin, is_user_itself, jwt_required
+from app.api.helpers.exceptions import UnprocessableEntity
 
 
 class UserSchema(Schema):
@@ -72,6 +73,16 @@ class UserList(ResourceList):
     """
     List and create Users
     """
+
+    def before_create_object(self, data, view_kwargs):
+        try:
+            self.session.query(User).filter_by(email=data['email']).one()
+        except NoResultFound:
+            pass
+        else:
+            raise UnprocessableEntity({'source': 'email_id'},
+                                      "User already exists with the provided email")
+
     decorators = (api.has_permission('is_admin', methods="GET"),)
     schema = UserSchema
     data_layer = {'session': db.session,
