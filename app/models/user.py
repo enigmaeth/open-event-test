@@ -44,8 +44,8 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    _email = db.Column(db.String(120), unique=True)
-    _password = db.Column(db.String(128))
+    _email = db.Column(db.String(120), unique=True, nullable=False)
+    _password = db.Column(db.String(128), nullable=False)
     reset_password = db.Column(db.String(128))
     salt = db.Column(db.String(128))
     avatar_url = db.Column(db.String)
