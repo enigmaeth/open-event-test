@@ -35,6 +35,7 @@ from app.api.ticket_tags import TicketTagList, TicketTagDetail, TicketTagRelatio
 from app.api.attendees import AttendeeList, AttendeeDetail, AttendeeRelationship
 from app.api.access_codes import AccessCodeList, AccessCodeDetail, AccessCodeRelationshipRequired, \
     AccessCodeRelationshipOptional
+from app.api.custom_forms import CustomFormList, CustomFormDetail, CustomFormRelationshipRequired
 from app.api.modules import ModuleDetail
 from app.api.custom_placeholders import CustomPlaceholderDetail, CustomPlaceholderList, CustomPlaceholderRelationship
 
@@ -133,7 +134,7 @@ api.route(EventDetail, 'event_detail', '/events/<int:id>', '/events/<identifier>
           '/sessions/<int:session_id>/event', '/ticket-tags/<int:ticket_tag_id>/event',
           '/role-invites/<int:role_invite_id>/event', '/users-events-roles/<int:users_events_role_id>/event',
           '/speakers/<int:speaker_id>/event', '/access-codes/<int:access_code_id>/event',
-          '/email-notifications/<int:email_notification_id>/event')
+          '/email-notifications/<int:email_notification_id>/event', '/custom-forms/<int:custom_form_id>/event')
 api.route(EventRelationship, 'event_ticket', '/events/<int:id>/relationships/tickets',
           '/events/<identifier>/relationships/tickets')
 api.route(EventRelationship, 'event_ticket_tag', '/events/<int:id>/relationships/ticket-tags',
@@ -174,6 +175,8 @@ api.route(EventRelationship, 'event_speaker', '/events/<int:id>/relationships/sp
           '/events/<identifier>/relationships/speakers')
 api.route(EventRelationship, 'event_access_codes', '/events/<int:id>/relationships/access-codes',
           '/events/<identifier>/relationships/access-codes')
+api.route(EventRelationship, 'event_custom_forms', '/events/<int:id>/relationships/custom-forms',
+          '/events/<identifier>/relationships/custom-forms')
 
 # microlocations
 api.route(MicrolocationList, 'microlocation_list', '/microlocations', '/events/<int:event_id>/microlocations',
@@ -341,3 +344,10 @@ api.route(AccessCodeRelationshipOptional, 'access_code_user',
           '/access-codes/<int:id>/relationships/user')
 api.route(AccessCodeRelationshipOptional, 'access_code_tickets',
           '/access-codes/<int:id>/relationships/tickets')
+
+# access code
+api.route(CustomFormList, 'custom_form_list', '/custom-forms', '/events/<int:event_id>/custom-forms',
+          '/events/<event_identifier>/custom-forms')
+api.route(CustomFormDetail, 'custom_form_detail', '/custom-forms/<int:id>')
+api.route(CustomFormRelationshipRequired, 'custom_form_event',
+          '/custom-forms/<int:id>/relationships/event')
